@@ -119,9 +119,15 @@ PREFIX=arm-linux-androideabi-
 COPT+= -mthumb-interwork -march=armv5te -mtune=xscale -msoft-float -fstack-protector 
 HOST=arm-linux-eabi
 else
+ifeq ($(ARCH),arm64)
+PREFIX=aarch64-linux-android-
+COPT+= -march=armv8-a
+HOST=aarch64-linux
+else
 PREFIX=i686-android-linux-
 COPT+= -march=i686
 HOST=i686-linux
+endif
 endif
 CC=$(PREFIX)gcc
 CPP=$(PREFIX)cpp

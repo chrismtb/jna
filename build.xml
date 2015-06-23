@@ -10,7 +10,7 @@
 
        Cross-compile by specifying -Dos.prefix={name-arch} to ant
        (cross-compile currently only configured/tested on w32ce-arm and
-       android-arm/-x86) 
+       android-arm/-x86/arm64) 
 
        Use ANT_OPTS=-Dskip-native=false to build native parts, or directly
          invoke the native or test targets
@@ -176,6 +176,7 @@
       <and>
         <not><equals arg1="${os.prefix}" arg2="android-arm" trim="true"/></not>
         <not><equals arg1="${os.prefix}" arg2="android-x86" trim="true"/></not>
+        <not><equals arg1="${os.prefix}" arg2="android-arm64" trim="true"/></not>
         <or>
           <equals arg1="${sun.arch.data.model}" arg2="64" trim="true"/>
           <equals arg1="${com.ibm.vm.bitmode}" arg2="64" trim="true"/>
@@ -606,6 +607,7 @@ osname=macosx;processor=x86;processor=x86-64;processor=ppc
     <copy file="${lib.native}/out-of-date.jar" tofile="${lib.native}/sunos-sparcv9.jar" overwrite="true"/>
     <copy file="${lib.native}/out-of-date.jar" tofile="${lib.native}/android-arm.jar" overwrite="true"/>
     <copy file="${lib.native}/out-of-date.jar" tofile="${lib.native}/android-x86.jar" overwrite="true"/>
+    <copy file="${lib.native}/out-of-date.jar" tofile="${lib.native}/android-arm64.jar" overwrite="true"/>
     <delete failOnError="false" includeEmptyDirs="true">
       <fileset dir="${build.native}" includes="*.o,*jnidispatch*"/>
     </delete>
@@ -667,6 +669,7 @@ osname=macosx;processor=x86;processor=x86-64;processor=ppc
       <or>
         <equals arg1="${os.prefix}" arg2="android-arm"/>
         <equals arg1="${os.prefix}" arg2="android-x86"/>
+        <equals arg1="${os.prefix}" arg2="android-arm64"/>
       </or>
     </condition>
     <property name="make.OS" value="IGNORE="/>
@@ -679,6 +682,9 @@ osname=macosx;processor=x86;processor=x86-64;processor=ppc
     </condition>
     <condition property="ARCH" value="x86">
       <equals arg1="${os.prefix}" arg2="android-x86"/>
+    </condition>
+    <condition property="ARCH" value="arm64">
+      <equals arg1="${os.prefix}" arg2="android-arm64"/>
     </condition>
     <condition property="ARCH" value="ppc">
       <equals arg1="${os.prefix}" arg2="aix-ppc"/>
